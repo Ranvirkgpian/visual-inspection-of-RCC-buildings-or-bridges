@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RCC Visual Inspection Application</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f6f8;
+    color: #17212b;
+}
+
+header {
+    background: #17324d;
+    color: white;
+    padding: 25px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 26px;
+}
+
+header p {
+    margin: 7px 0 0;
+    opacity: 0.85;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 0 18px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+}
+
+h2 {
+    font-size: 19px;
+    margin-top: 0;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccd5dc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 5px 5px 0 0;
+}
+
+.primary {
+    background: #1976d2;
+    color: white;
+}
+
+.secondary {
+    background: #e8eef3;
+    color: #17324d;
+}
+
+.danger {
+    background: #c62828;
+    color: white;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.stat {
+    background: #eef4f8;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.stat b {
+    display: block;
+    font-size: 25px;
+}
+
+.stat span {
+    font-size: 12px;
+    color: #60717e;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.Good {
+    background: #d8f3dc;
+    color: #176b2c;
+}
+
+.Minor {
+    background: #fff1bd;
+    color: #805d00;
+}
+
+.Moderate {
+    background: #ffe0b2;
+    color: #8a4b00;
+}
+
+.Severe {
+    background: #ffd1d1;
+    color: #a10f0f;
+}
+
+.progress {
+    height: 12px;
+    background: #e5e9ed;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    background: #1976d2;
+}
+
+.notice {
+    background: #fff8e1;
+    border-left: 4px solid #f0ad00;
+    padding: 10px;
+    margin-top: 12px;
+    font-size: 13px;
+}
+
+.small {
+    font-size: 12px;
+    color: #60717e;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th,
+td {
+    padding: 9px;
+    border-bottom: 1px solid #e4e8eb;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: #f5f7f9;
+}
+
+@media(max-width:900px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .row {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>RCC Visual Inspection Dashboard</h1>
+    <p>
+        Vibe Coding Application for Visual Inspection of RCC Structures
+    </p>
+</header>
+
+<div class="container">
+
+<!-- STRUCTURE INFORMATION -->
+
+<div class="card">
+
+<h2>1. Inspection Information</h2>
+
+<div class="row">
+
+<div>
+<label>Structure ID</label>
+<input id="sid" value="RCC-BLDG-01">
+</div>
+
+<div>
+<label>Inspection Date</label>
+<input id="date" type="date">
+</div>
+
+<div>
+<label>Inspector</label>
+<input id="inspector" value="Student Inspector">
+</div>
+
+<div>
+<label>Structure Type</label>
+
+<select id="stype">
+
+<option>
+G+2 RCC Residential Building
+</option>
+
+<option>
+RCC T-Beam Bridge
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="grid">
+
+<div>
+
+<!-- OBSERVATION FORM -->
+
+<div class="card">
+
+<h2>2. Record Observation</h2>
+
+<div class="row">
+
+<div>
+
+<label>Floor</label>
+
+<select id="floor">
+
+<option>Ground Floor</option>
+<option>First Floor</option>
+<option>Second Floor</option>
+<option>Roof</option>
+<option>External Area</option>
+<option>Foundation/Plinth</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Component</label>
+
+<select id="component">
+
+<option>Column</option>
+<option>Beam</option>
+<option>Floor Slab</option>
+<option>Roof Slab</option>
+<option>Staircase</option>
+<option>Balcony/Projection</option>
+<option>Masonry Wall/Interface</option>
+<option>Foundation/Plinth</option>
+<option>External RCC Surface</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Location</label>
+
+<input
+id="location"
+placeholder="e.g. Grid B-3 / east face"
+>
+
+</div>
+
+
+<div>
+
+<label>Defect</label>
+
+<select id="defect">
+
+<option>Cracks</option>
+<option>Spalling</option>
+<option>Exposed Reinforcement</option>
+<option>Corrosion Staining</option>
+<option>Dampness/Leakage</option>
+<option>Honeycombing</option>
+<option>Deformation</option>
+<option>Surface Deterioration</option>
+<option>No Significant Visible Defect</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Severity / Condition</label>
+
+<select id="severity">
+
+<option>Good</option>
+<option>Minor</option>
+<option>Moderate</option>
+<option>Severe</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Recommended Action</label>
+
+<select id="action">
+
+<option>Routine Monitoring</option>
+<option>Routine Maintenance</option>
+<option>Repair / Maintenance Attention</option>
+<option>Detailed Inspection / NDT Recommended</option>
+<option>Urgent Professional Assessment</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<label style="margin-top:12px">
+Observation / Remarks
+</label>
+
+<textarea
+id="remarks"
+placeholder="Describe visible condition, extent and location."
+></textarea>
+
+
+<div class="notice">
+
+This application documents visible conditions only.
+Visual inspection alone does not establish structural safety.
+
+</div>
+
+
+<button
+class="primary"
+onclick="addObservation()"
+>
++ Add Observation
+</button>
+
+
+<button
+class="secondary"
+onclick="loadSamples()"
+>
+Load Sample Cases
+</button>
+
+
+<button
+class="secondary"
+onclick="clearAll()"
+>
+Clear All
+</button>
+
+</div>
+
+</div>
+
+
+<div>
+
+<!-- SUMMARY -->
+
+<div class="card">
+
+<h2>3. Condition Summary</h2>
+
+<div class="stats">
+
+<div class="stat">
+<b id="total">0</b>
+<span>Total Observations</span>
+</div>
+
+<div class="stat">
+<b id="severe">0</b>
+<span>Severe</span>
+</div>
+
+<div class="stat">
+<b id="moderate">0</b>
+<span>Moderate</span>
+</div>
+
+<div class="stat">
+<b id="attention">0</b>
+<span>Need Attention</span>
+</div>
+
+</div>
+
+
+<div style="margin-top:18px">
+
+<label>
+Overall Visual Condition Index
+</label>
+
+<div class="progress">
+
+<div
+id="bar"
+class="bar"
+style="width:100%"
+></div>
+
+</div>
+
+<div
+class="small"
+id="score"
+>
+100 / 100
+</div>
+
+</div>
+
+
+<div
+id="recommendation"
+class="notice"
+>
+
+Add observations to generate an engineering-oriented summary.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- OBSERVATION TABLE -->
+
+<div class="card">
+
+<h2>4. Recorded Observations</h2>
+
+<div style="overflow:auto">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>#</th>
+<th>Floor</th>
+<th>Component</th>
+<th>Location</th>
+<th>Defect</th>
+<th>Condition</th>
+<th>Action</th>
+<th>Remarks</th>
+<th></th>
+
+</tr>
+
+</thead>
+
+<tbody id="tbody">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<button
+class="primary"
+onclick="downloadCSV()"
+>
+Export CSV
+</button>
+
+
+<button
+class="secondary"
+onclick="window.print()"
+>
+Print / Save as PDF
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+let observations = [];
+
+const scores = {
+
+    Good: 0,
+    Minor: 1,
+    Moderate: 3,
+    Severe: 5
+
+};
+
+
+document.getElementById("date").value =
+new Date().toISOString().slice(0,10);
+
+
+function addObservation() {
+
+    const observation = {
+
+        floor:
+        document.getElementById("floor").value,
+
+        component:
+        document.getElementById("component").value,
+
+        location:
+        document.getElementById("location").value ||
+        "Not specified",
+
+        defect:
+        document.getElementById("defect").value,
+
+        severity:
+        document.getElementById("severity").value,
+
+        action:
+        document.getElementById("action").value,
+
+        remarks:
+        document.getElementById("remarks").value ||
+        "No additional remarks"
+
+    };
+
+    observations.push(observation);
+
+    document.getElementById("location").value = "";
+    document.getElementById("remarks").value = "";
+
+    render();
+
+}
+
+
+function render() {
+
+    const tbody =
+    document.getElementById("tbody");
+
+    tbody.innerHTML = observations.map(
+
+        (o, i) => `
+
+        <tr>
+
+        <td>${i + 1}</td>
+
+        <td>${o.floor}</td>
+
+        <td>${o.component}</td>
+
+        <td>${o.location}</td>
+
+        <td>${o.defect}</td>
+
+        <td>
+        <span class="badge ${o.severity}">
+        ${o.severity}
+        </span>
+        </td>
+
+        <td>${o.action}</td>
+
+        <td>${o.remarks}</td>
+
+        <td>
+
+        <button
+        class="danger"
+        onclick="removeObservation(${i})"
+        >
+        ×
+        </button>
+
+        </td>
+
+        </tr>
+
+        `
+
+    ).join("");
+
+
+    const total =
+    observations.length;
+
+    const severe =
+    observations.filter(
+        x => x.severity === "Severe"
+    ).length;
+
+    const moderate =
+    observations.filter(
+        x => x.severity === "Moderate"
+    ).length;
+
+    const attention =
+    observations.filter(
+        x =>
+        x.severity === "Moderate" ||
+        x.severity === "Severe"
+    ).length;
+
+
+    const penalty =
+    observations.reduce(
+        (sum, x) =>
+        sum + scores[x.severity],
+        0
+    );
+
+
+    const index =
+    total
+    ?
+    Math.max(
+        0,
+        Math.round(
+            100 -
+            penalty / total * 20
+        )
+    )
+    :
+    100;
+
+
+    document.getElementById("total")
+    .textContent = total;
+
+    document.getElementById("severe")
+    .textContent = severe;
+
+    document.getElementById("moderate")
+    .textContent = moderate;
+
+    document.getElementById("attention")
+    .textContent = attention;
+
+    document.getElementById("bar")
+    .style.width = index + "%";
+
+    document.getElementById("score")
+    .textContent =
+    index + " / 100";
+
+
+    let message;
+
+    if (total === 0) {
+
+        message =
+        "Add observations to generate an engineering-oriented summary.";
+
+    }
+
+    else if (severe > 0) {
+
+        message =
+        "Severe visible deterioration recorded. Detailed inspection and professional structural assessment are recommended.";
+
+    }
+
+    else if (moderate > 0) {
+
+        message =
+        "Moderate deterioration recorded. Prioritize repair/maintenance attention and consider further inspection.";
+
+    }
+
+    else {
+
+        message =
+        "Observed condition is predominantly Good/Minor. Continue routine maintenance and monitoring.";
+
+    }
+
+
+    document.getElementById("recommendation")
+    .textContent = message;
+
+}
+
+
+function removeObservation(index) {
+
+    observations.splice(index, 1);
+
+    render();
+
+}
+
+
+function clearAll() {
+
+    if (
+        confirm(
+            "Clear all observations?"
+        )
+    ) {
+
+        observations = [];
+
+        render();
+
+    }
+
+}
+
+
+function loadSamples() {
+
+    observations = [
+
+        {
+
+            floor:
+            "Ground Floor",
+
+            component:
+            "Column",
+
+            location:
+            "Grid A-2, east face",
+
+            defect:
+            "Cracks",
+
+            severity:
+            "Minor",
+
+            action:
+            "Routine Monitoring",
+
+            remarks:
+            "Fine visible crack; extent to be monitored."
+
+        },
+
+        {
+
+            floor:
+            "First Floor",
+
+            component:
+            "Beam",
+
+            location:
+            "Grid B-3, soffit",
+
+            defect:
+            "Spalling",
+
+            severity:
+            "Moderate",
+
+            action:
+            "Repair / Maintenance Attention",
+
+            remarks:
+            "Localized spalling visible at beam soffit."
+
+        },
+
+        {
+
+            floor:
+            "Second Floor",
+
+            component:
+            "Column",
+
+            location:
+            "Grid C-1, external face",
+
+            defect:
+            "Corrosion Staining",
+
+            severity:
+            "Moderate",
+
+            action:
+            "Detailed Inspection / NDT Recommended",
+
+            remarks:
+            "Rust staining suggests possible reinforcement corrosion."
+
+        },
+
+        {
+
+            floor:
+            "Roof",
+
+            component:
+            "Roof Slab",
+
+            location:
+            "North-west corner",
+
+            defect:
+            "Dampness/Leakage",
+
+            severity:
+            "Severe",
+
+            action:
+            "Urgent Professional Assessment",
+
+            remarks:
+            "Significant dampness/leakage observed."
+
+        },
+
+        {
+
+            floor:
+            "Ground Floor",
+
+            component:
+            "Staircase",
+
+            location:
+            "Central stair flight",
+
+            defect:
+            "No Significant Visible Defect",
+
+            severity:
+            "Good",
+
+            action:
+            "Routine Monitoring",
+
+            remarks:
+            "No significant visible distress noted."
+
+        }
+
+    ];
+
+    render();
+
+}
+
+
+function downloadCSV() {
+
+    let rows = [
+
+        [
+
+            "Floor",
+            "Component",
+            "Location",
+            "Defect",
+            "Severity",
+            "Action",
+            "Remarks"
+
+        ],
+
+        ...observations.map(o => [
+
+            o.floor,
+            o.component,
+            o.location,
+            o.defect,
+            o.severity,
+            o.action,
+            o.remarks
+
+        ])
+
+    ];
+
+
+    let csv =
+    rows.map(
+
+        row =>
+        row.map(
+
+            value =>
+            `"${String(value)
+            .replaceAll('"','""')}"`
+
+        ).join(",")
+
+    ).join("\n");
+
+
+    const link =
+    document.createElement("a");
+
+    link.href =
+    URL.createObjectURL(
+        new Blob(
+            [csv],
+            {type:"text/csv"}
+        )
+    );
+
+    link.download =
+    "rcc_inspection_observations.csv";
+
+    link.click();
+
+}
+
+
+loadSamples();
+
+</script>
+
+</body>
+</html>
